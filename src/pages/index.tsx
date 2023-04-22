@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useState } from "react";
@@ -15,7 +16,8 @@ import {
 } from "@mui/material";
 import Footer from "@/components/Footer";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
-// import Blurb from "../components/Blurb"
+import Blurb from "../components/Blurb"
+import EmailCallTabs from "./components/EmailCallTabs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -77,5 +79,6 @@ export default function Home() {
         <Footer/>
       </div>
     </>
+
   );
 }
