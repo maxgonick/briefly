@@ -1,0 +1,25 @@
+.main {
+  background-color: white;
+  height: 100vh;
+}
+
+.middle {
+  display: flex;
+  margin-top: 2rem;
+}
+
+.inputBox {
+  width: 10rem;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.hottestBills {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
