@@ -12,11 +12,19 @@ export default function Home() {
     const fetchData = async () => {
       const state = 'WV';
       const data = await fetch(`/api/billsForState?state=${state}`);
+      const query = 'medical freedom';
+      const searchData = await fetch(`/api/billsForText?state=${state}&query=${query}`);
+      const searchDataJson = await searchData.json();
       const dataJson = await data.json();
       if(data.status >= 400){
         console.log(dataJson['message']);
       } else {
         console.log(dataJson);
+      }
+      if(searchData.status >= 400){
+        console.log(searchDataJson['message']);
+      } else {
+        console.log(searchDataJson);
       }
     }
     fetchData();
