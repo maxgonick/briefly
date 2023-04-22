@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BillFullInfo from "@/components/BillFullInfo";
@@ -10,6 +10,9 @@ type Props = {};
 const Bill = (props: Props) => {
   const router = useRouter();
   const data = router.query.billId;
+  const [foo, setFoo] = useState({
+    title: "hello",
+  });
   useEffect(() => {
     const fetchData = async (billId: string) => {
       console.log("I am run");
@@ -18,6 +21,9 @@ const Bill = (props: Props) => {
         const result = await fetch(`/api/getBill?id=${billId}`);
         const resultJson = await result.json();
         console.log(resultJson);
+        setFoo({
+          title: resultJson.title,
+        });
       }
     };
     fetchData(data);
@@ -28,7 +34,7 @@ const Bill = (props: Props) => {
       <div className="flex flex-row w-auto justify-evenly">
         <div className="w-1/2 p-3">
           <BillFullInfo
-            billName="H.R.3684 - Infrastructure Investment and Jobs Act"
+            billName={foo.title}
             billStatus="Pending in the House"
             billDate="Sept 2021"
             billSponsor="Chuck Schumer"
