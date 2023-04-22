@@ -23,7 +23,7 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography sx = {{color: 'black', fontSize: 18, textTransform: "none"}}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -45,11 +45,11 @@ export default function EmailCallTabs(props: {email: string, number: string}) {
   };
 
   return (
-    <Box sx={{ width: '100%' , color: 'white'}}>
+    <Box sx={{ width: '100%' , color: 'black'}}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" TabIndicatorProps={{style: {background:'white'}}}>
-          <Tab label="Email" sx = {{color: 'white'}} {...a11yProps(0)} />
-          <Tab label="Call" sx = {{color: 'white'}} {...a11yProps(1)} />
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" TabIndicatorProps={{style: {background:'cornflowerblue'}}}>
+          <Tab label="Email" sx = {{color: 'black', fontSize: 24, textTransform: "none", width: 1/2 }} {...a11yProps(0)} />
+          <Tab label="Call" sx = {{color: 'black', fontSize: 24, textTransform: "none", width: 1/2}} {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

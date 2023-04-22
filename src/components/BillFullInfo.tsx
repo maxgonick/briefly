@@ -11,7 +11,7 @@ export default function BillFullInfo(props:{billName: string, billStatus: string
             <Box
                 sx={{
                     margin: 1,
-                    width: 0.5,
+                    width: 1,
                     backgroundColor: 'primary.dark',
                     borderRadius: 10,
                     boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.3)',
@@ -19,7 +19,7 @@ export default function BillFullInfo(props:{billName: string, billStatus: string
                 }}
                 >
                 <div>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 24, textIndent: 1, width: 0.5, flex:1, padding: 2}}>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 24, textIndent: 1, flex:1, padding: 2}}>
                         <p className = "break-words">Summary: {props.billSummary}<br/></p>
                     </Typography>
                 </div>
@@ -27,7 +27,7 @@ export default function BillFullInfo(props:{billName: string, billStatus: string
             <Box
                 sx={{
                     margin: 1,
-                    width: 0.5,
+                    width: 1,
                     backgroundColor: 'primary.dark',
                     borderRadius: 10,
                     boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.3)',

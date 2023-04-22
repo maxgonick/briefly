@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import styles from "@/styles/Index.module.css";
+import Link from "next/link";
 import {
   FormControl,
   Select,
@@ -107,6 +108,16 @@ export default function Home() {
           {/* <Blurb /> */}
           {/* Right side */}
         </div>
+        <Link
+          href={{
+            pathname: "/bill",
+            query: {
+              billId: 123456,
+            }, // the data
+          }}
+        >
+          <h1>temporary button to access ./bill.tsx</h1>
+        </Link>
         <Footer />
       </div>
     </>
