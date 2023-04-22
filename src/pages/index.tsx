@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useState, useEffect } from "react";
@@ -16,50 +15,56 @@ import {
 } from "@mui/material";
 import Footer from "@/components/Footer";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
-import Blurb from "../components/Blurb"
+import Blurb from "../components/Blurb";
 import EmailCallTabs from "@/components/EmailCallTabs";
 import BillButton from "@/components/BillButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const [state, setState] = useState<string>('CA');
+  const [state, setState] = useState<string>("CA");
   const [results, setResults] = useState<any>([]);
 
-  const renderRows = (props : ListChildComponentProps) => {
+  const renderRows = (props: ListChildComponentProps) => {
     const { index, style } = props;
-    const shortList = results.slice(0, 20);
+    const bill = results[index];
+    const listItemStyle = {
+      ...style,
+      marginBottom: "4px",
+      marginTop: "4px",
+    };
+    if (!bill) return null;
 
-    // return (
-
-          
-          {shortList.map((bill : any) => {
-            return ( 
-              <ListItem style={style} key={index} component="div" disablePadding>
-              <ListItemButton>
-              <ListItemText primary={`Item ${index + 1}`} />
-              <BillButton key={bill['id']} billTitle={bill['title']} billID={bill['id']} billName={bill['title']}/>
-              </ListItemButton>
-              </ListItem>
-            );
-          })
-          }
-
-    // );
-
+    return (
+      <ListItem
+        style={listItemStyle}
+        key={bill["id"]}
+        component="div"
+        disablePadding
+      >
+        <ListItemButton>
+          <ListItemText primary={`Bill ${index + 1}`} />
+          <BillButton
+            key={bill["id"]}
+            billTitle={bill["title"]}
+            billID={bill["id"]}
+            billName={bill["title"]}
+          />
+        </ListItemButton>
+      </ListItem>
+    );
   };
 
   useEffect(() => {
-    console.log('runing');
     const fetchData = async () => {
       const data = await fetch(`/api/billsForState?state=${state}`);
       const dataJson = await data.json();
-      if(data.status >= 400){
-        console.log(dataJson['message']);
+      if (data.status >= 400) {
+        console.log(dataJson["message"]);
       } else {
         setResults(dataJson);
       }
-    }
+    };
     fetchData();
   }, [state]);
   return (
@@ -78,7 +83,9 @@ export default function Home() {
                   id="demo-simple-select"
                   label="State"
                   value={state}
-                  onChange={(event) => {setState(event.target.value as string);}}
+                  onChange={(event) => {
+                    setState(event.target.value as string);
+                  }}
                 >
                   <MenuItem value="CA">CA</MenuItem>
                   <MenuItem value="FL">FL</MenuItem>
@@ -87,31 +94,21 @@ export default function Home() {
               </FormControl>
             </div>
             <Box className={styles.list}>
-              {/* <FixedSizeList
+              <FixedSizeList
                 height={400}
                 width={360}
-                itemSize={46}
-                itemCount={200}
-              > */}
-            {results.map((bill : any) => {
-              return ( 
-                <ListItem key={bill['id']} component="div" disablePadding>
-                  <ListItemButton>
-                    <BillButton key={bill['id']} billTitle={bill['number']} billID={bill['id']} billName={bill['title']}/>
-                  </ListItemButton>
-                </ListItem>
-              );
-            })
-            }
-              {/* </FixedSizeList> */}
+                itemSize={100}
+                itemCount={results.length}
+              >
+                {renderRows}
+              </FixedSizeList>
             </Box>
           </div>
           {/* <Blurb /> */}
           {/* Right side */}
         </div>
-        <Footer/>
+        <Footer />
       </div>
     </>
-
   );
 }
