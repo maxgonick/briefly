@@ -2,10 +2,20 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useState } from "react";
 import Header from "@/components/Header";
-import styles from "@/styles/Navbar.module.css";
-import { FormControl, Select, InputLabel, MenuItem } from "@mui/material";
-import Footer from '@/components/Footer'
-import EmailCallTabs from '@/components/EmailCallTabs'
+import styles from "@/styles/Index.module.css";
+import {
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem,
+  ListItem,
+  ListItemText,
+  ListItemButton,
+  Box,
+} from "@mui/material";
+import Footer from "@/components/Footer";
+import EmailCallTabs from "@/components/EmailCallTabs";
+import { FixedSizeList, ListChildComponentProps } from "react-window";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,32 +26,54 @@ export default function Home() {
     setState(event.target.value as string);
   };
 
+  const renderRow = (props: ListChildComponentProps) => {
+    const { index, style } = props;
+    return (
+      <ListItem style={style} key={index} component="div" disablePadding>
+        <ListItemButton>
+          <ListItemText primary={`Item ${index + 1}`} />
+        </ListItemButton>
+      </ListItem>
+    );
+  };
+
   return (
-    <div className={styles.main}>
-      <Header />
-      <div className={styles.middle}>
-        {/* Left side */}
-        <div className={styles.left}>
-          <div className={styles.hottestBills}>
-            <span>Hottest Bills in </span>
-            <FormControl className={styles.inputBox}>
-              <InputLabel id="demo-simple-select-label">State</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="State"
-                value={state}
+    <>
+      <div className={styles.main}>
+        <Header />
+        <div className={styles.middle}>
+          {/* Left side */}
+          <div className={styles.left}>
+            <div className={styles.hottestBills}>
+              <span>Hottest Bills in </span>
+              <FormControl className={styles.inputBox}>
+                <InputLabel id="demo-simple-select-label">State</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="State"
+                  value={state}
+                >
+                  <MenuItem value="CA">CA</MenuItem>
+                  <MenuItem value="FL">FL</MenuItem>
+                  <MenuItem value="WC">WV</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <Box className={styles.list}>
+              <FixedSizeList
+                height={400}
+                width={360}
+                itemSize={46}
+                itemCount={200}
               >
-                <MenuItem value="CA">CA</MenuItem>
-                <MenuItem value="FL">FL</MenuItem>
-                <MenuItem value="WC">WV</MenuItem>
-              </Select>
-            </FormControl>
+                {renderRow}
+              </FixedSizeList>
+            </Box>
           </div>
-          <div>WORK</div>
+          {/* Right side */}
         </div>
-        {/* Right side */}
       </div>
-    </div>
+    </>
   );
 }
