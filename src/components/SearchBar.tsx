@@ -1,17 +1,15 @@
 import React from 'react';
 import { useState, useEffect} from 'react';
 import {TextField, Button, Box} from '@mui/material';
+import Link from 'next/link';
+
 const SearchBar = () => {
     const [keywords, setKeywords] = useState("");
 
     const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
         setKeywords(e.target.value);
-        console.log(keywords);
     };
 
-    const searchButtonHandler = (e: React.MouseEvent<HTMLElement>) =>{
-        console.log("clicked");
-    };
 
     return(
         <Box 
@@ -38,10 +36,16 @@ const SearchBar = () => {
             />
             <Button 
                 color="inherit" 
-                onClick={searchButtonHandler}
                 sx={{ width: 60, padding: .5, margin: 2 }}
             >
-                search
+                <Link
+                    href={{
+                        pathname: '/searchResults',
+                        query: {keywords}
+                    }}
+                >
+                    search
+                </Link>
             </Button>
         </Box>
 
