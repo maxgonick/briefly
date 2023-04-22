@@ -21,7 +21,6 @@ export default function Header() {
             Briefly
           </Typography>
             <SearchBar/>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </Box>
