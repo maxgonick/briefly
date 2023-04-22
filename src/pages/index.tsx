@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useState, useEffect } from "react";
@@ -17,7 +16,7 @@ import {
 } from "@mui/material";
 import Footer from "@/components/Footer";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
-import Blurb from "../components/Blurb"
+import Blurb from "../components/Blurb";
 import EmailCallTabs from "/components/EmailCallTabs";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -40,27 +39,29 @@ export default function Home() {
     );
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const state = 'WV';
-      const data = await fetch(`/api/billsForState?state=${state}`);
-      const query = 'medical freedom';
-      const searchData = await fetch(`/api/billsForText?state=${state}&query=${query}`);
-      const searchDataJson = await searchData.json();
-      const dataJson = await data.json();
-      if(data.status >= 400){
-        console.log(dataJson['message']);
-      } else {
-        console.log(dataJson);
-      }
-      if(searchData.status >= 400){
-        console.log(searchDataJson['message']);
-      } else {
-        console.log(searchDataJson);
-      }
-    }
-    fetchData();
-  });
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const state = "WV";
+  //     const data = await fetch(`/api/billsForState?state=${state}`);
+  //     const query = "medical freedom";
+  //     const searchData = await fetch(
+  //       `/api/billsForText?state=${state}&query=${query}`
+  //     );
+  //     const searchDataJson = await searchData.json();
+  //     const dataJson = await data.json();
+  //     if (data.status >= 400) {
+  //       console.log(dataJson["message"]);
+  //     } else {
+  //       console.log(dataJson);
+  //     }
+  //     if (searchData.status >= 400) {
+  //       console.log(searchDataJson["message"]);
+  //     } else {
+  //       console.log(searchDataJson);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
   return (
     <>
       <div className={styles.main}>
@@ -97,14 +98,19 @@ export default function Home() {
           </div>
           {/* <Blurb /> */}
           {/* Right side */}
-
         </div>
-          <Link href="/bill" passHref>
-            <h1>temporary button to access ./bill.tsx</h1> 
-          </Link>
-        <Footer/>
+        <Link
+          href={{
+            pathname: "/bill",
+            query: {
+              billId: 123456,
+            }, // the data
+          }}
+        >
+          <h1>temporary button to access ./bill.tsx</h1>
+        </Link>
+        <Footer />
       </div>
     </>
-
   );
 }
