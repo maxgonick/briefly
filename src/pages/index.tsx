@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main>
     <Header/>
-      <EmailCallTabs email="email" number="number"/>
+      <EmailCallTabs email="dear joe, hi. -donnie j trump " number="4206661738"/>
     <Footer/>
     </main>
   );
