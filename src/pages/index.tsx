@@ -35,24 +35,32 @@ export default function Home() {
       marginTop: "4px",
     };
     if (!bill) return null;
-
     return (
-      <ListItem
-        style={listItemStyle}
-        key={bill["id"]}
-        component="div"
-        disablePadding
+      <Link
+        href={{
+          pathname: "/bill",
+          query: {
+            billId: bill["bill_id"],
+          },
+        }}
       >
-        <ListItemButton>
-          <ListItemText primary={`Bill ${index + 1}`} />
-          <BillButton
-            key={bill["id"]}
-            billTitle={bill["title"]}
-            billID={bill["id"]}
-            billName={bill["title"]}
-          />
-        </ListItemButton>
-      </ListItem>
+        <ListItem
+          style={listItemStyle}
+          key={bill["id"]}
+          component="div"
+          disablePadding
+        >
+          <ListItemButton>
+            <ListItemText primary={`Bill ${index + 1}`} />
+            <BillButton
+              key={bill["id"]}
+              billTitle={bill["title"]}
+              billID={bill["id"]}
+              billName={bill["title"]}
+            />
+          </ListItemButton>
+        </ListItem>
+      </Link>
     );
   };
 
