@@ -17,49 +17,51 @@ import {
 import Footer from "@/components/Footer";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import Blurb from "../components/Blurb"
-import EmailCallTabs from "./components/EmailCallTabs";
+import EmailCallTabs from "@/components/EmailCallTabs";
+import BillButton from "@/components/BillButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const [state, setState] = useState<string>("");
+  const [state, setState] = useState<string>('CA');
+  const [results, setResults] = useState<any>([]);
 
-  const handleChange = (event: any) => {
-    setState(event.target.value as string);
-  };
-
-  const renderRow = (props: ListChildComponentProps) => {
+  const renderRows = (props : ListChildComponentProps) => {
     const { index, style } = props;
-    return (
-      <ListItem style={style} key={index} component="div" disablePadding>
-        <ListItemButton>
-          <ListItemText primary={`Item ${index + 1}`} />
-        </ListItemButton>
-      </ListItem>
-    );
+    const shortList = results.slice(0, 20);
+
+    // return (
+
+          
+          {shortList.map((bill : any) => {
+            return ( 
+              <ListItem style={style} key={index} component="div" disablePadding>
+              <ListItemButton>
+              <ListItemText primary={`Item ${index + 1}`} />
+              <BillButton key={bill['id']} billTitle={bill['title']} billID={bill['id']} billName={bill['title']}/>
+              </ListItemButton>
+              </ListItem>
+            );
+          })
+          }
+
+    // );
+
   };
 
   useEffect(() => {
+    console.log('runing');
     const fetchData = async () => {
-      const state = 'WV';
       const data = await fetch(`/api/billsForState?state=${state}`);
-      const query = 'medical freedom';
-      const searchData = await fetch(`/api/billsForText?state=${state}&query=${query}`);
-      const searchDataJson = await searchData.json();
       const dataJson = await data.json();
       if(data.status >= 400){
         console.log(dataJson['message']);
       } else {
-        console.log(dataJson);
-      }
-      if(searchData.status >= 400){
-        console.log(searchDataJson['message']);
-      } else {
-        console.log(searchDataJson);
+        setResults(dataJson);
       }
     }
     fetchData();
-  });
+  }, [state]);
   return (
     <>
       <div className={styles.main}>
@@ -76,6 +78,7 @@ export default function Home() {
                   id="demo-simple-select"
                   label="State"
                   value={state}
+                  onChange={(event) => {setState(event.target.value as string);}}
                 >
                   <MenuItem value="CA">CA</MenuItem>
                   <MenuItem value="FL">FL</MenuItem>
@@ -84,14 +87,23 @@ export default function Home() {
               </FormControl>
             </div>
             <Box className={styles.list}>
-              <FixedSizeList
+              {/* <FixedSizeList
                 height={400}
                 width={360}
                 itemSize={46}
                 itemCount={200}
-              >
-                {renderRow}
-              </FixedSizeList>
+              > */}
+            {results.map((bill : any) => {
+              return ( 
+                <ListItem key={bill['id']} component="div" disablePadding>
+                  <ListItemButton>
+                    <BillButton key={bill['id']} billTitle={bill['number']} billID={bill['id']} billName={bill['title']}/>
+                  </ListItemButton>
+                </ListItem>
+              );
+            })
+            }
+              {/* </FixedSizeList> */}
             </Box>
           </div>
           {/* <Blurb /> */}
