@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import styles from "@/styles/Index.module.css";
+import Link from "next/link";
 import {
   FormControl,
   Select,
@@ -17,7 +18,7 @@ import {
 import Footer from "@/components/Footer";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import Blurb from "../components/Blurb"
-import EmailCallTabs from "./components/EmailCallTabs";
+import EmailCallTabs from "/components/EmailCallTabs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -96,7 +97,11 @@ export default function Home() {
           </div>
           {/* <Blurb /> */}
           {/* Right side */}
+
         </div>
+          <Link href="/bill" passHref>
+            <h1>temporary button to access ./bill.tsx</h1> 
+          </Link>
         <Footer/>
       </div>
     </>
