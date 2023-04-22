@@ -1,7 +1,7 @@
 import { Box, Card, Link, Typography } from '@mui/joy';
 import { useState, useEffect } from "react";
 
-export default function BillButton({ billID }) {
+export default function BillButton(billID: number) {
     //query bill info from bill ID here
     const [billName, setBillName] = useState("name");
     const [billDescription, setBillDescription] = useState("des or keywords");
