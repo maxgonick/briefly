@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import Footer from "@/components/Footer";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
-import Blurb from "../components/Blurb"
+// import Blurb from "../components/Blurb"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -71,7 +71,7 @@ export default function Home() {
               </FixedSizeList>
             </Box>
           </div>
-          <Blurb />
+          {/* <Blurb /> */}
           {/* Right side */}
         </div>
         <Footer/>
