@@ -43,14 +43,21 @@ function Home() {
       marginTop: "4px",
     };
     if (!bill) return null;
-
     return (
-      <ListItem
-        style={listItemStyle}
-        key={bill["id"]}
-        component="div"
-        disablePadding
+      <Link
+        href={{
+          pathname: "/bill",
+          query: {
+            billId: bill["bill_id"],
+          },
+        }}
       >
+        <ListItem
+          style={listItemStyle}
+          key={bill["id"]}
+          component="div"
+          disablePadding
+        >
         <ListItemButton>
           <BillButton
             key={bill["bill_id"]}
@@ -61,6 +68,7 @@ function Home() {
           />
         </ListItemButton>
       </ListItem>
+      </Link>
     );
   };
 
