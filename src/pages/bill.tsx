@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BillFullInfo from "@/components/BillFullInfo";
@@ -7,9 +7,36 @@ import EmailCallTabs from "@/components/EmailCallTabs";
 import { useRouter } from "next/router";
 type Props = {};
 
+function intToStatus(inp: string) {
+  const conversionTable = {
+    0: "N/A",
+    1: "Introduced",
+    2: "Engrossed",
+    3: "Enrolled",
+    4: "Passed",
+    5: "Vetoed",
+    6: "Failed",
+    7: "Override",
+    8: "Chaptered",
+    9: "Refer",
+    10: "Report Pass",
+    11: "Report DNP",
+    12: "Draft",
+  };
+  return conversionTable[inp];
+}
+
 const Bill = (props: Props) => {
   const router = useRouter();
   const data = router.query.billId;
+  const [billObj, setbillObj] = useState({
+    name: "Loading...",
+    status: "",
+    date: "",
+    sponsor: "",
+    committee: "",
+    summary: "",
+  });
   useEffect(() => {
     const fetchData = async (billId: string) => {
       console.log("I am run");
@@ -18,22 +45,43 @@ const Bill = (props: Props) => {
         const result = await fetch(`/api/getBill?id=${billId}`);
         const resultJson = await result.json();
         console.log(resultJson);
+        const summaryResult = await fetch(
+          `/api/summarizeBill?input=${resultJson.bill.description}`
+        );
+
+        const summaryResultJSON = await summaryResult.json();
+        console.log(summaryResultJSON);
+        setbillObj({
+          name: resultJson.bill.title,
+          status: intToStatus(
+            resultJson.bill.progress[resultJson.bill.progress.length - 1].event
+          ),
+          date: resultJson.bill.status_date,
+          sponsor: resultJson.bill.sponsors
+            .map((obj) => {
+              return obj.name;
+            })
+            .join(", "),
+          committee: resultJson.bill.committee.name,
+          summary: summaryResultJSON.summary,
+        });
       }
     };
     fetchData(data);
   }, [data]);
+
   return (
     <div>
       <Header />
       <div className="flex flex-row w-auto justify-evenly">
         <div className="w-1/2 p-3">
           <BillFullInfo
-            billName="H.R.3684 - Infrastructure Investment and Jobs Act"
-            billStatus="Pending in the House"
-            billDate="Sept 2021"
-            billSponsor="Chuck Schumer"
-            billCommittee="Senate Committee on Environment and Public Works"
-            billSummary="The bill aims to invest $1 trillion in infrastructure, including roads, bridges, public transportation, broadband, and more, with the goal of creating jobs and improving the country's infrastructure."
+            billName={billObj.name}
+            billStatus={billObj.status}
+            billDate={billObj.date}
+            billSponsor={billObj.sponsor}
+            billCommittee={billObj.committee}
+            billSummary={billObj.summary}
           />
         </div>
         <div className="w-1/2 p-3 mr-3">
