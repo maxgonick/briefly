@@ -58,16 +58,16 @@ function Home() {
           component="div"
           disablePadding
         >
-          <ListItemButton>
-            <ListItemText primary={`Bill ${index + 1}`} />
-            <BillButton
-              key={bill["id"]}
-              billTitle={bill["title"]}
-              billID={bill["id"]}
-              billName={bill["title"]}
-            />
-          </ListItemButton>
-        </ListItem>
+        <ListItemButton>
+          <BillButton
+            key={bill["bill_id"]}
+            billTitle={bill["title"]}
+            billID={bill["bill_id"]}
+            billDescription={bill["description"]}
+            billNumber={bill["number"]}
+          />
+        </ListItemButton>
+      </ListItem>
       </Link>
     );
   };

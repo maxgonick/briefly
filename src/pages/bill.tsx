@@ -40,17 +40,16 @@ const Bill = (props: Props) => {
   useEffect(() => {
     const fetchData = async (billId: string) => {
       console.log("I am run");
-      console.log(billId);
       if (billId) {
         const result = await fetch(`/api/getBill?id=${billId}`);
         const resultJson = await result.json();
-        console.log(resultJson);
-        // const summaryResult = await fetch(
-        //   `/api/summarizeBill?input=${resultJson.bill.description}`
-        // );
-
-        // const summaryResultJSON = await summaryResult.json();
-        // console.log(summaryResultJSON);
+        const docId = resultJson.bill.texts[resultJson.bill.texts.length-1].doc_id;
+        console.log(docId);
+        const summaryResult = await fetch(
+          `/api/summarizeBill?id=${docId}`
+        );
+        const summaryResultJSON = await summaryResult.json();
+        console.log(summaryResultJSON);
         setbillObj({
           name: resultJson.bill.title,
           status: intToStatus(
@@ -63,8 +62,9 @@ const Bill = (props: Props) => {
             })
             .join(", "),
           committee: resultJson.bill.committee.name,
-          summary: resultJson.bill.description,
+          summary: summaryResultJSON.body.summary,
         });
+        //console.log("fuck all" , summaryResultJSON.body.summary);
       }
     };
     fetchData(data);
