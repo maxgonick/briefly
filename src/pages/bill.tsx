@@ -9,7 +9,7 @@ import Email from "@/components/Email";
 import { useRouter } from "next/router";
 type Props = {};
 
-function intToStatus(inp: string): any {
+function intToStatus(inp: keyof typeof conversionTable): any {
   const conversionTable = {
     0: "N/A",
     1: "Introduced",
@@ -25,7 +25,8 @@ function intToStatus(inp: string): any {
     11: "Report DNP",
     12: "Draft",
   };
-  return conversionTable[inp];
+  const result: any = conversionTable[inp] || "Invalid status";
+  return result;
 }
 
 const Bill = (props: Props) => {
@@ -42,7 +43,7 @@ const Bill = (props: Props) => {
     summary: "",
   });
   useEffect(() => {
-    const fetchData = async (billId: string) => {
+    const fetchData = async (billId: any) => {
       console.log("I am run");
       if (billId) {
         const result = await fetch(`/api/getBill?id=${billId}`);
@@ -61,7 +62,7 @@ const Bill = (props: Props) => {
           date: resultJson.bill.status_date,
           number: resultJson.bill.bill_number,
           sponsor: resultJson.bill.sponsors
-            .map((obj) => {
+            .map((obj: any) => {
               return obj.name;
             })
             .join(", "),

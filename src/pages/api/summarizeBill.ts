@@ -20,7 +20,7 @@ export default async function summarizeBill(req : NextApiRequest, res: NextApiRe
         if (isPdf) {
             const pdf = base64.base64Decode(result.text.doc, 'bill.pdf');
             const option = {from: 0, to: 10000}; 
-            text = await pdfUtil.pdfToText(process.cwd() + "/bill.pdf", option, function(err, data) {
+            text = await pdfUtil.pdfToText(process.cwd() + "/bill.pdf", option, function(err : any, data : any) {
                 if (err) throw(err);
                 return data; //print text    
             });
