@@ -15,7 +15,8 @@ export default async function handler(
     } else {
       const result = await billRequest.json();
       if (result["status"] === "OK") {
-        res.status(200).json(result['searchresult']);
+        const object = result["searchresult"]
+        res.status(200).json(Object.keys(object).map((key) => object[key]));
       } else {
         res.status(404).json({message: 'Failed to find what you searched for'});
       }

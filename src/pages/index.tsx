@@ -1,9 +1,9 @@
-
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Header from "@/components/Header";
 import styles from "@/styles/Index.module.css";
+import Link from "next/link";
 import {
   FormControl,
   Select,
@@ -16,50 +16,59 @@ import {
 } from "@mui/material";
 import Footer from "@/components/Footer";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
-import Blurb from "../components/Blurb"
-import EmailCallTabs from "./components/EmailCallTabs";
+import Blurb from "../components/Blurb";
+import EmailCallTabs from "@/components/EmailCallTabs";
+import BillButton from "@/components/BillButton";
+
+import GlobalState from '../context';
 
 const inter = Inter({ subsets: ["latin"] });
-
 export default function Home() {
-  const [state, setState] = useState<string>("");
+    const [results, setResults] = useState<any>([]);
+    const {state, setState} = useContext(GlobalState);
 
-  const handleChange = (event: any) => {
-    setState(event.target.value as string);
-  };
-
-  const renderRow = (props: ListChildComponentProps) => {
+    const renderRow = (props: ListChildComponentProps) => {
     const { index, style } = props;
+    const bill = results[index];
+    const listItemStyle = {
+      ...style,
+      marginBottom: "4px",
+      marginTop: "4px",
+    };
+    if (!bill) return null;
+
     return (
-      <ListItem style={style} key={index} component="div" disablePadding>
+      <ListItem
+        style={listItemStyle}
+        key={bill["id"]}
+        component="div"
+        disablePadding
+      >
         <ListItemButton>
-          <ListItemText primary={`Item ${index + 1}`} />
+          <BillButton
+            key={bill["bill_id"]}
+            billTitle={bill["title"]}
+            billID={bill["bill_id"]}
+            billDescription={bill["description"]}
+            billNumber={bill["number"]}
+          />
         </ListItemButton>
       </ListItem>
     );
   };
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   const state = 'WV';
-    //   const data = await fetch(`/api/billsForState?state=${state}`);
-    //   const query = 'medical freedom';
-    //   const searchData = await fetch(`/api/billsForText?state=${state}&query=${query}`);
-    //   const searchDataJson = await searchData.json();
-    //   const dataJson = await data.json();
-    //   if(data.status >= 400){
-    //     console.log(dataJson['message']);
-    //   } else {
-    //     console.log(dataJson);
-    //   }
-    //   if(searchData.status >= 400){
-    //     console.log(searchDataJson['message']);
-    //   } else {
-    //     console.log(searchDataJson);
-    //   }
-    // }
-    // fetchData();
-  });
+    const fetchData = async () => {
+      const data = await fetch(`/api/billsForState?state=${state}`);
+      const dataJson = await data.json();
+      if (data.status >= 400) {
+        console.log(dataJson["message"]);
+      } else {
+        setResults(dataJson);
+      }
+    };
+    fetchData();
+  }, [state]);
   return (
     <>
       <div className={styles.main}>
@@ -76,10 +85,13 @@ export default function Home() {
                   id="demo-simple-select"
                   label="State"
                   value={state}
+                  onChange={(event) => {
+                    setState(event.target.value as string);
+                  }}
                 >
                   <MenuItem value="CA">CA</MenuItem>
                   <MenuItem value="FL">FL</MenuItem>
-                  <MenuItem value="WC">WV</MenuItem>
+                  <MenuItem value="WV">WV</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -87,8 +99,8 @@ export default function Home() {
               <FixedSizeList
                 height={400}
                 width={360}
-                itemSize={46}
-                itemCount={200}
+                itemSize={100}
+                itemCount={results.length}
               >
                 {renderRow}
               </FixedSizeList>
@@ -97,9 +109,18 @@ export default function Home() {
           {/* <Blurb /> */}
           {/* Right side */}
         </div>
-        <Footer/>
+        <Link
+          href={{
+            pathname: "/bill",
+            query: {
+              billId: 123456,
+            }, // the data
+          }}
+        >
+          <h1>temporary button to access ./bill.tsx</h1>
+        </Link>
+        <Footer />
       </div>
     </>
-
   );
 }

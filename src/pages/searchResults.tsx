@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import {TextField, Button, Box} from '@mui/material';
 import getBillFromKeywords from './api/billsForText';
+import GlobalState from '../context';
 
 export default function SearchResults(){
     const router = useRouter();
@@ -15,19 +16,19 @@ export default function SearchResults(){
     //pipe that into billbutton and then bill button should pipe that into bill page
 
     useEffect(() => {
-        const fetchData = async () =>{
-            const state = "CA";
-            const query = keywords;
-            const searchData = await fetch(`/api/billsForText?state=${state}&query=${query}`);
-            const searchDataJson = await searchData.json();
-            if(searchData.status >= 400){
-                console.log(searchDataJson['message']);
-            } else {
-                setSearchResult(searchDataJson);
-                console.log(searchDataJson);
-            }
-        };
-        fetchData();
+        // const fetchData = async () =>{
+        //     const state = "CA";
+        //     const query = keywords;
+        //     const searchData = await fetch(`/api/billsForText?state=${state}&query=${query}`);
+        //     const searchDataJson = await searchData.json();
+        //     if(searchData.status >= 400){
+        //         console.log(searchDataJson['message']);
+        //     } else {
+        //         setSearchResult(searchDataJson);
+        //         console.log(searchDataJson);
+        //     }
+        // };
+        // fetchData();
         // console.log(keywords);
     }, []);
 
