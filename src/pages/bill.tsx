@@ -84,7 +84,7 @@ const Bill = (props: Props) => {
           component="div"
           sx={{ flexGrow: 1, fontSize: 36, marginLeft: 2, color: "#362419" }}
         >
-          {billObj.name}
+          {billObj.number + ': ' + billObj.name}
         </Typography>
       </div>
       <div className="flex  w-auto justify-evenly">
