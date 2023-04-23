@@ -117,7 +117,8 @@ function Home() {
             <div>Loading...</div>
           ) : (
             <FixedSizeList
-              height={400}
+              style={{marginTop: 10}}
+              height={800}
               width={800}
               itemSize={160}
               itemCount={results.length}
