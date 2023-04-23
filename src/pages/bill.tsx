@@ -9,7 +9,7 @@ import Email from "@/components/Email";
 import { useRouter } from "next/router";
 type Props = {};
 
-function intToStatus(inp: string) {
+function intToStatus(inp: string): any {
   const conversionTable = {
     0: "N/A",
     1: "Introduced",
@@ -47,11 +47,10 @@ const Bill = (props: Props) => {
       if (billId) {
         const result = await fetch(`/api/getBill?id=${billId}`);
         const resultJson = await result.json();
-        const docId = resultJson.bill.texts[resultJson.bill.texts.length-1].doc_id;
+        const docId =
+          resultJson.bill.texts[resultJson.bill.texts.length - 1].doc_id;
         console.log(docId);
-        const summaryResult = await fetch(
-          `/api/summarizeBill?id=${docId}`
-        );
+        const summaryResult = await fetch(`/api/summarizeBill?id=${docId}`);
         const summaryResultJSON = await summaryResult.json();
         console.log(summaryResultJSON);
         setbillObj({
@@ -84,7 +83,7 @@ const Bill = (props: Props) => {
           component="div"
           sx={{ flexGrow: 1, fontSize: 36, marginLeft: 2, color: "#362419" }}
         >
-          {billObj.number + ': ' + billObj.name}
+          {billObj.number + ": " + billObj.name}
         </Typography>
       </div>
       <div className="flex  w-auto justify-evenly">
