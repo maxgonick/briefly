@@ -80,16 +80,21 @@ function Home() {
   return (
     <>
       <div className="h-screen bg-gradient-to-r from-indigo-500">
-        <Header/>
+        <Header />
         <div className="flex flex-col justify-center content-center text-center h-screen ">
-          <Box 
+          <Box
             sx={{
-              width: 600,
-              height: 450,
-              backgroundColor: '#FAF9F6',
+              width: 550,
+              height: 350,
+              backgroundColor: "#FFFEF2",
               boxShadow: 15,
-              flexDirection: "column",
-              alignContent: "center"
+              alignSelf: "center",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingBottom: "2rem",
+              borderRadius: "12px",
             }}
           >
             <Blurb />
@@ -101,8 +106,11 @@ function Home() {
 }
 //div className="bg-cream h-[450px] w-[600px] flex-col flex justify-center"
 
-{/* Left side */}
-          {/* <div className={styles.left}>
+{
+  /* Left side */
+}
+{
+  /* <div className={styles.left}>
             <div className={styles.hottestBills}>
               <span>Hottest Bills in </span>
               <FormControl className={styles.inputBox}>
@@ -133,4 +141,5 @@ function Home() {
                 {renderRow}
               </FixedSizeList>
             </Box>
-          </div> */}
+          </div> */
+}
