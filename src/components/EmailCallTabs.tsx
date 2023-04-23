@@ -23,7 +23,7 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography sx = {{color: 'black', fontSize: 18, textTransform: "none"}}>{children}</Typography>
+          <Typography sx = {{color: "362419", fontSize: 18, textTransform: "none"}}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -37,7 +37,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function EmailCallTabs(props: {email: string, number: string}) {
+export default function EmailCallTabs(props: {forEmail: React.ReactComponentElement, againstEmail: React.ReactComponentElement}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -45,18 +45,18 @@ export default function EmailCallTabs(props: {email: string, number: string}) {
   };
 
   return (
-    <Box sx={{ width: '100%' , color: 'black'}}>
+    <Box sx={{ width: '100%' , color: "#362419"}}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" TabIndicatorProps={{style: {background:'cornflowerblue'}}}>
-          <Tab label="Email" sx = {{color: 'black', fontSize: 24, textTransform: "none", width: 1/2 }} {...a11yProps(0)} />
-          <Tab label="Call" sx = {{color: 'black', fontSize: 24, textTransform: "none", width: 1/2}} {...a11yProps(1)} />
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" TabIndicatorProps={{style: {background:'#5EB1DE'}}}>
+          <Tab label="Email Template For" sx = {{color: "#362419", fontSize: 24, textTransform: "none", width: 1/2 }} {...a11yProps(0)} />
+          <Tab label="Email Template Against" sx = {{color: "#362419", fontSize: 24, textTransform: "none", width: 1/2}} {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {props.email}
+        {props.forEmail}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Call at {props.number}
+        {props.againstEmail}
       </TabPanel>
     </Box>
   );

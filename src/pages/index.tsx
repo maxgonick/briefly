@@ -11,16 +11,20 @@ import {
   MenuItem,
   ListItem,
   ListItemButton,
+  ListItemText,
   Box,
 } from "@mui/material";
 import Footer from "@/components/Footer";
-import { FixedSizeList, ListChildComponentProps } from "react-window";
+import {
+  FixedSizeList,
+  ListChildComponentProps,
+  VariableSizeList,
+} from "react-window";
 import Blurb from "../components/Blurb";
 import EmailCallTabs from "@/components/EmailCallTabs";
 import BillButton from "@/components/BillButton";
 
 import { GlobalStateProvider, useGlobalStateContext } from "../context";
-
 
 export default function HomeWrapper() {
   return (
@@ -33,15 +37,11 @@ export default function HomeWrapper() {
 function Home() {
   const [results, setResults] = useState<any>([]);
   const { state, setState } = useGlobalStateContext();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const renderRow = (props: ListChildComponentProps) => {
     const { index, style } = props;
     const bill = results[index];
-    const listItemStyle = {
-      ...style,
-      marginBottom: "4px",
-      marginTop: "4px",
-    };
     if (!bill) return null;
     return (
       <Link
@@ -52,28 +52,24 @@ function Home() {
           },
         }}
       >
-        <ListItem
-          style={listItemStyle}
-          key={bill["id"]}
-          component="div"
-          disablePadding
-        >
-        <ListItemButton>
-          <BillButton
-            key={bill["bill_id"]}
-            billTitle={bill["title"]}
-            billID={bill["bill_id"]}
-            billDescription={bill["description"]}
-            billNumber={bill["number"]}
-          />
-        </ListItemButton>
-      </ListItem>
+        <ListItem style={style} key={bill["id"]} component="div" disablePadding>
+          <ListItemButton>
+            <BillButton
+              key={bill["bill_id"]}
+              billTitle={bill["title"]}
+              billID={bill["bill_id"]}
+              billDescription={bill["description"]}
+              billNumber={bill["number"]}
+            />
+          </ListItemButton>
+        </ListItem>
       </Link>
     );
   };
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const data = await fetch(`/api/billsForState?state=${state}`);
       const dataJson = await data.json();
       if (data.status >= 400) {
@@ -81,6 +77,7 @@ function Home() {
       } else {
         setResults(dataJson);
       }
+      setLoading(false);
     };
     fetchData();
 
@@ -88,55 +85,71 @@ function Home() {
   }, [state]);
   return (
     <>
-      <div className={styles.main}>
-        <Header />
-        <div className={styles.middle}>
-          {/* Left side */}
-          <div className={styles.left}>
-            <div className={styles.hottestBills}>
-              <span>Hottest Bills in </span>
-              <FormControl className={styles.inputBox}>
-                <InputLabel id="demo-simple-select-label">State</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="State"
-                  value={state}
-                  onChange={(event) => {
-                    setState(event.target.value as string);
-                    console.log(event.target.value);
-                  }}
-                >
-                  <MenuItem value="CA">CA</MenuItem>
-                  <MenuItem value="FL">FL</MenuItem>
-                  <MenuItem value="WV">WV</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <Box className={styles.list}>
+      <div className="flex flex-col h-screen">
+        {/* <Header /> */}
+        <div className={styles.main}>
+          <Box
+            sx={{
+              width: 600,
+              height: 325,
+              backgroundColor: "#FFFEF2",
+              boxShadow: 15,
+              alignSelf: "center",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingBottom: "2rem",
+              borderRadius: "30px",
+            }}
+          >
+            <Blurb />
+          </Box>
+          <div className="mt-[100px]">
+            <div className={`${styles.arrow} ${styles.arrowfirst}`}></div>
+            <div className={`${styles.arrow} ${styles.arrowsecond}`}></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Second Part */}
+      <div className="h-screen flex flex-col justify-center content-center mx-4">
+        <div>
+          <div className={styles.hottestBills}>
+            <span>Hottest Bills in </span>
+            <FormControl className={styles.inputBox}>
+              <InputLabel id="demo-simple-select-label">State</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="State"
+                value={state}
+                onChange={(event) => {
+                  setState(event.target.value as string);
+                  console.log(event.target.value);
+                }}
+              >
+                <MenuItem value="CA">CA</MenuItem>
+                <MenuItem value="FL">FL</MenuItem>
+                <MenuItem value="WV">WV</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          <Box className="flex flex-row justify-center">
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
               <FixedSizeList
                 height={400}
-                width={360}
-                itemSize={100}
+                width={800}
+                itemSize={160}
                 itemCount={results.length}
               >
                 {renderRow}
               </FixedSizeList>
-            </Box>
-          </div>
-          <Blurb />
+            )}
+          </Box>
         </div>
-        <Link
-          href={{
-            pathname: "/bill",
-            query: {
-              billId: 123456,
-            }, // the data
-          }}
-        >
-          <h1>temporary button to access ./bill.tsx</h1>
-        </Link>
-        <Footer />
       </div>
     </>
   );
