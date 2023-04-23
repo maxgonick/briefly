@@ -19,19 +19,22 @@ import Blurb from "../components/Blurb";
 import EmailCallTabs from "@/components/EmailCallTabs";
 import BillButton from "@/components/BillButton";
 
-import  {GlobalStateProvider, useGlobalStateContext} from '../context';
+import { GlobalStateProvider, useGlobalStateContext } from "../context";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export default function HomeWrapper() {
-  return <GlobalStateProvider><Home/></GlobalStateProvider>
+  return (
+    <GlobalStateProvider>
+      <Home />
+    </GlobalStateProvider>
+  );
 }
 
 function Home() {
-    const [results, setResults] = useState<any>([]);
-    const {state, setState} = useGlobalStateContext();
+  const [results, setResults] = useState<any>([]);
+  const { state, setState } = useGlobalStateContext();
 
-    const renderRow = (props: ListChildComponentProps) => {
+  const renderRow = (props: ListChildComponentProps) => {
     const { index, style } = props;
     const bill = results[index];
     const listItemStyle = {
@@ -73,8 +76,7 @@ function Home() {
     };
     fetchData();
 
-    console.log('THIS IS THE STATE:   ', state);
-
+    console.log("THIS IS THE STATE:   ", state);
   }, [state]);
   return (
     <>
@@ -114,8 +116,7 @@ function Home() {
               </FixedSizeList>
             </Box>
           </div>
-          {/* <Blurb /> */}
-          {/* Right side */}
+          <Blurb />
         </div>
         <Link
           href={{
