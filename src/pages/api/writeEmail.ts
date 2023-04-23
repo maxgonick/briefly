@@ -8,7 +8,7 @@ export default async function writeEmail(req : NextApiRequest, res: NextApiRespo
     if(req.method == "GET") {
         const billName = req.query.name;
         const billSponsor = req.query.sponsor;
-        const proEmailPrompt = `Dear Representative ${billSponsor}, I wanted contact you in regards of your legislation ${billName}, as it has had profound impacts in our community.`;
+        const proEmailPrompt = `Dear Representative ${billSponsor}, I wanted to contact you in regards of your legislation ${billName}, as it has had profound impacts in our community.`;
         const antiEmailPrompt = `Dear Representative ${billSponsor}, I wanted to voice my opposing viewpoint to this legislation, as you were the representative that sponsored ${billName}, and I wanted to reach out to my elected officials on what I believe.`;
         
     await (async () => {
@@ -20,7 +20,7 @@ export default async function writeEmail(req : NextApiRequest, res: NextApiRespo
         }
 
         const p2email = await cohere.generate(pInput);
-        const pEmail = `Hello honorable Representative ${billSponsor}, I wanted to commend your sponsorship of ${billName}, as it has profound impacts on American society. ${p2email.body.generations[0].text} Thank you for your service to the American people.${"\n"} Sincerely, ${"\n"} [your name]`;
+        const pEmail = `Dear Representative ${billSponsor}, I wanted to contact you in regards of your legislation ${billName}, as it has had profound impacts in our community. ${p2email.body.generations[0].text} Thank you for representing our communities.${"\n"} Sincerely, ${"\n"} [your name]`;
         const aInput : generateRequest = {
             prompt: antiEmailPrompt,
             model: "command-xlarge-nightly",
@@ -28,7 +28,7 @@ export default async function writeEmail(req : NextApiRequest, res: NextApiRespo
             k: 500
         }
         const a2email = await cohere.generate(aInput)
-        const aEmail = `Hello honorable Representative ${billSponsor}, I wanted to voice my opposing viewpoint to this legislation, seeing that you are the sponsor of ${billName}, and I felt the imperative to reach out to my elected officials and dissuade policies like this. ${a2email.body.generations[0].text} Thank you for your service to the American people, and I hope I can make a change in this country.${"\n"} Sincerely, ${"\n"} [your name]`;
+        const aEmail = `Dear Representative ${billSponsor}, I wanted to voice my opposing viewpoint to this legislation, as you were the representative that sponsored ${billName}, and I wanted to reach out to my elected officials on what I believe. ${a2email.body.generations[0].text} Thank you for representing our communities, and we hope you can. ${"\n"} Sincerely, ${"\n"} [your name]`;
         // const response = await JSON.stringify({proEmail: pEmail, antiEmail: aEmail});
         // console.log(response);
         res.status(200).json({proEmail: pEmail, antiEmail: aEmail});
