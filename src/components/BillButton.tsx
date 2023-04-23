@@ -1,7 +1,7 @@
 import { Box, Card, Link, Typography } from '@mui/joy';
 import { useState, useEffect } from "react";
 
-export default function BillButton(props:{billName: string, billTitle: string, billID: number}) {
+export default function BillButton(props:{billDescription: string, billTitle: string, billID: number, billNumber: string}) {
     return (
         <Card
             variant="outlined"
@@ -22,11 +22,11 @@ export default function BillButton(props:{billName: string, billTitle: string, b
                         href=""
                         sx={{ color: 'black' }}
                     >
-                        {props.billName}
+                        {props.billNumber}: {props.billTitle}
                     </Link>
                 </Typography>
                 <Typography>
-                    {props.billTitle}
+                    {props.billDescription}
                 </Typography>
             </Box>
         </Card>
