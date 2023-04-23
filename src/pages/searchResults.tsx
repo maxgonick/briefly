@@ -17,6 +17,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BillButton from "@/components/BillButton";
 import { GlobalStateProvider, useGlobalStateContext } from "../context";
+import Link from "next/link";
 
 export default function SearchResultsWrapper() {
   return (
@@ -54,37 +55,37 @@ function SearchResults() {
   const renderRow = (props: ListChildComponentProps) => {
     const { index, style } = props;
     const bill = results[index];
-    const listItemStyle = {
-      ...style,
-      marginBottom: "4px",
-      marginTop: "4px",
-    };
+    console.log(bill);
+    console.log(bill["title"]);
     if (!bill) return null;
-
     return (
-      <ListItem
-        style={listItemStyle}
-        key={bill["id"]}
-        component="div"
-        disablePadding
+      <Link
+        href={{
+          pathname: "/bill",
+          query: {
+            billId: bill["bill_id"],
+          },
+        }}
       >
-        <ListItemButton>
-          <BillButton
-            key={bill["bill_id"]}
-            billTitle={bill["title"]}
-            billID={bill["bill_id"]}
-            billDescription={bill["description"]}
-            billNumber={bill["bill_number"]}
-          />
-        </ListItemButton>
-      </ListItem>
+        <ListItem style={style} key={bill["id"]} component="div" disablePadding>
+          <ListItemButton>
+            <BillButton
+              key={bill["bill_id"]}
+              billTitle={bill["title"]}
+              billID={bill["bill_id"]}
+              billDescription={bill["description"]}
+              billNumber={bill["bill_number"]}
+            />
+          </ListItemButton>
+        </ListItem>
+      </Link>
     );
   };
 
   return (
-    <>
-    <Header />
-      <div className={styles.main}>
+    <div className="h-screen flex flex-col">
+      <Header />
+      <div className={`${styles.main} flex-grow`}>
         <div className={styles.middle}>
           {/* Left side */}
           <div className={styles.left}>
@@ -109,8 +110,8 @@ function SearchResults() {
             <Box className={styles.list}>
               <FixedSizeList
                 height={400}
-                width={360}
-                itemSize={100}
+                width={800}
+                itemSize={160}
                 itemCount={results.length}
               >
                 {renderRow}
@@ -122,6 +123,6 @@ function SearchResults() {
         </div>
         {/* <Footer /> */}
       </div>
-    </>
+    </div>
   );
 }
