@@ -62,8 +62,9 @@ const Bill = (props: Props) => {
             })
             .join(", "),
           committee: resultJson.bill.committee.name,
-          summary: "summary for now" //summaryResultJSON.summary,
+          summary: summaryResultJSON.body.summary,
         });
+        //console.log("fuck all" , summaryResultJSON.body.summary);
       }
     };
     fetchData(data);
