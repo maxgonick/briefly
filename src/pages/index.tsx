@@ -79,10 +79,29 @@ function Home() {
   }, [state]);
   return (
     <>
-      <div className="bg-white h-screen ">
+      <div className="h-screen bg-gradient-to-r from-indigo-500">
         <Header/>
-        <div className="flex flex-col justify-center content-center text-center h-screen">
-          {/* Left side */}
+        <div className="flex flex-col justify-center content-center text-center h-screen ">
+          <Box 
+            sx={{
+              width: 600,
+              height: 450,
+              backgroundColor: '#FAF9F6',
+              boxShadow: 15,
+              flexDirection: "column",
+              alignContent: "center"
+            }}
+          >
+            <Blurb />
+          </Box>
+        </div>
+      </div>
+    </>
+  );
+}
+//div className="bg-cream h-[450px] w-[600px] flex-col flex justify-center"
+
+{/* Left side */}
           {/* <div className={styles.left}>
             <div className={styles.hottestBills}>
               <span>Hottest Bills in </span>
@@ -115,9 +134,3 @@ function Home() {
               </FixedSizeList>
             </Box>
           </div> */}
-          <Blurb />
-        </div>
-      </div>
-    </>
-  );
-}
