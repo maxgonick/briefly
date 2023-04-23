@@ -7,7 +7,7 @@ import EmailCallTabs from "@/components/EmailCallTabs";
 import { useRouter } from "next/router";
 type Props = {};
 
-function intToStatus(inp: string){
+function intToStatus(inp: string) {
   const conversionTable = {
     0: "N/A",
     1: "Introduced",
@@ -21,11 +21,10 @@ function intToStatus(inp: string){
     9: "Refer",
     10: "Report Pass",
     11: "Report DNP",
-    12: "Draft"
-  }
+    12: "Draft",
+  };
   return conversionTable[inp];
 }
-
 
 const Bill = (props: Props) => {
   const router = useRouter();
@@ -45,13 +44,25 @@ const Bill = (props: Props) => {
       if (billId) {
         const result = await fetch(`/api/getBill?id=${billId}`);
         const resultJson = await result.json();
+
+        const summaryResult = await fetch(
+          `/api/summarizeBill?input=${resultJson.bill.description}`
+        );
+
+        const summaryResultJSON = await summaryResult.json();
         setbillObj({
           name: resultJson.bill.title,
-          status: intToStatus(resultJson.bill.progress[resultJson.bill.progress.length-1].event),
+          status: intToStatus(
+            resultJson.bill.progress[resultJson.bill.progress.length - 1].event
+          ),
           date: resultJson.bill.status_date,
-          sponsor: resultJson.bill.sponsors.map((obj)=>{return obj.name}).join(", "),
+          sponsor: resultJson.bill.sponsors
+            .map((obj) => {
+              return obj.name;
+            })
+            .join(", "),
           committee: resultJson.bill.committee.name,
-          summary: resultJson.bill.description,
+          summary: summaryResultJSON.summary,
         });
       }
     };
@@ -85,4 +96,3 @@ const Bill = (props: Props) => {
 };
 
 export default Bill;
-
