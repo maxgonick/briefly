@@ -44,12 +44,13 @@ const Bill = (props: Props) => {
       if (billId) {
         const result = await fetch(`/api/getBill?id=${billId}`);
         const resultJson = await result.json();
-
+        console.log(resultJson);
         const summaryResult = await fetch(
           `/api/summarizeBill?input=${resultJson.bill.description}`
         );
 
         const summaryResultJSON = await summaryResult.json();
+        console.log(summaryResultJSON);
         setbillObj({
           name: resultJson.bill.title,
           status: intToStatus(
