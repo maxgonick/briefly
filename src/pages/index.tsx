@@ -20,12 +20,17 @@ import Blurb from "../components/Blurb";
 import EmailCallTabs from "@/components/EmailCallTabs";
 import BillButton from "@/components/BillButton";
 
-import GlobalState from '../context';
+import  {GlobalStateProvider, useGlobalStateContext} from '../context';
 
 const inter = Inter({ subsets: ["latin"] });
-export default function Home() {
+
+export default function HomeWrapper() {
+  return <GlobalStateProvider><Home/></GlobalStateProvider>
+}
+
+function Home() {
     const [results, setResults] = useState<any>([]);
-    const {state, setState} = useContext(GlobalState);
+    const {state, setState} = useGlobalStateContext();
 
     const renderRow = (props: ListChildComponentProps) => {
     const { index, style } = props;
@@ -68,6 +73,9 @@ export default function Home() {
       }
     };
     fetchData();
+
+    console.log('THIS IS THE STATE:   ', state);
+
   }, [state]);
   return (
     <>
@@ -87,6 +95,7 @@ export default function Home() {
                   value={state}
                   onChange={(event) => {
                     setState(event.target.value as string);
+                    console.log(event.target.value);
                   }}
                 >
                   <MenuItem value="CA">CA</MenuItem>

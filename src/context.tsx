@@ -1,4 +1,4 @@
-import {createContext, useState, Dispatch, SetStateAction} from 'react';
+import React, {createContext, useContext, useState, Dispatch, SetStateAction} from 'react';
 
 export interface GlobalStateContext {
     state: string
@@ -8,14 +8,13 @@ const GlobalState = createContext<GlobalStateContext>({
     state: 'CA',
     setState: () => {}
 });
-export const GlobalStateProvider = (props:{children: any}) => {
-    const [state, setState] = useState('CA');
+export const GlobalStateProvider = ( { children } : {children: React.ReactNode}) => {
+    const [state, setState] = useState<string>('CA');
     return(
         <GlobalState.Provider value={{state, setState}}>
-            {props.children}
+            {children}
         </GlobalState.Provider>
     );
 }
 
-
-export default {GlobalState, GlobalStateProvider};
+export const useGlobalStateContext = (): GlobalStateContext => useContext(GlobalState);
