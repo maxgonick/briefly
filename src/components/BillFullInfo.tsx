@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Typography, Box } from "@mui/material";
-
+import cohere from '../../public/cohere.svg';
+import Image from 'next/image'
 export default function BillFullInfo(props: {
   billName: string;
   billStatus: string;
@@ -11,13 +12,6 @@ export default function BillFullInfo(props: {
 }) {
   return (
     <div className="flex flex-col">
-      {/* <Typography
-        variant="h6"
-        component="div"
-        sx={{ flexGrow: 1, fontSize: 36, marginLeft: 2 }}
-      >
-        {props.billName}
-      </Typography> */}
       <Box
         sx={{
           margin: 1,
@@ -47,6 +41,7 @@ export default function BillFullInfo(props: {
             </p>
           </Typography>
         </div>
+        <Image src={cohere} alt="" style={{marginLeft: 'auto'}}/>
       </Box>
       <Box
         sx={{
