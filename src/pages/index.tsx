@@ -21,7 +21,6 @@ import BillButton from "@/components/BillButton";
 
 import { GlobalStateProvider, useGlobalStateContext } from "../context";
 
-
 export default function HomeWrapper() {
   return (
     <GlobalStateProvider>
@@ -80,11 +79,11 @@ function Home() {
   }, [state]);
   return (
     <>
-      <div className={styles.main}>
-        <Header />
-        <div className={styles.middle}>
+      <div className="bg-white h-screen ">
+        <Header/>
+        <div className="flex flex-col justify-center content-center text-center h-screen">
           {/* Left side */}
-          <div className={styles.left}>
+          {/* <div className={styles.left}>
             <div className={styles.hottestBills}>
               <span>Hottest Bills in </span>
               <FormControl className={styles.inputBox}>
@@ -115,20 +114,9 @@ function Home() {
                 {renderRow}
               </FixedSizeList>
             </Box>
-          </div>
+          </div> */}
           <Blurb />
         </div>
-        <Link
-          href={{
-            pathname: "/bill",
-            query: {
-              billId: 123456,
-            }, // the data
-          }}
-        >
-          <h1>temporary button to access ./bill.tsx</h1>
-        </Link>
-        <Footer />
       </div>
     </>
   );

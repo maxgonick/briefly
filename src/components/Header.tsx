@@ -1,20 +1,27 @@
-import * as React from 'react';
-import MenuIcon from '@mui/icons-material/Menu';
-import {TextField, Toolbar, AppBar, Box, Typography, Button, IconButton} from '@mui/material';
-import SearchBar from './SearchBar';
+import * as React from "react";
+import MenuIcon from "@mui/icons-material/Menu";
+import {
+  TextField,
+  Toolbar,
+  AppBar,
+  Box,
+  Typography,
+  Button,
+  IconButton,
+} from "@mui/material";
+import SearchBar from "./SearchBar";
 
 export default function Header() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="absolute">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1}}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Briefly
           </Typography>
-          <SearchBar/>
+          <SearchBar />
         </Toolbar>
       </AppBar>
     </Box>
   );
 }
-

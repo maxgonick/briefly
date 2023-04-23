@@ -1,15 +1,30 @@
-import * as React from 'react';
-import Link from 'next/link';
-import MenuIcon from '@mui/icons-material/Menu';
-import {TextField, Toolbar, AppBar, Box, Typography, Button, IconButton} from '@mui/material';
-import SearchBar from './SearchBar';
+import * as React from "react";
+import Link from "next/link";
+import MenuIcon from "@mui/icons-material/Menu";
+import {
+  TextField,
+  Toolbar,
+  AppBar,
+  Box,
+  Typography,
+  Button,
+  IconButton,
+} from "@mui/material";
+import SearchBar from "./SearchBar";
 
 export default function Footer() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" style={{ top: 'auto', bottom: 0 }}>
+    <Box position="">
+      <AppBar position="relative">
         <Toolbar>
-          <div style = {{display:'flex', flexDirection:'row', justifyContent:'center', width:'100%'}}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
             <Link href="/">About Us</Link>
           </div>
           {/* <Typography variant="h6" align = "center" component="div" sx={{ flexGrow: 1 }}>
@@ -30,4 +45,3 @@ export default function Footer() {
     </Box>
   );
 }
-
