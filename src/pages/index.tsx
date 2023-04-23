@@ -116,7 +116,7 @@ function Home() {
       </div>
 
       {/* Second Part */}
-      <div className="h-screen">
+      <div className="h-screen flex flex-col justify-center content-center">
         <div className={styles.hottestBills}>
           <span>Hottest Bills in </span>
           <FormControl className={styles.inputBox}>
