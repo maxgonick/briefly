@@ -11,10 +11,15 @@ import {
   MenuItem,
   ListItem,
   ListItemButton,
+  ListItemText,
   Box,
 } from "@mui/material";
 import Footer from "@/components/Footer";
-import { FixedSizeList, ListChildComponentProps } from "react-window";
+import {
+  FixedSizeList,
+  ListChildComponentProps,
+  VariableSizeList,
+} from "react-window";
 import Blurb from "../components/Blurb";
 import EmailCallTabs from "@/components/EmailCallTabs";
 import BillButton from "@/components/BillButton";
@@ -32,15 +37,11 @@ export default function HomeWrapper() {
 function Home() {
   const [results, setResults] = useState<any>([]);
   const { state, setState } = useGlobalStateContext();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const renderRow = (props: ListChildComponentProps) => {
     const { index, style } = props;
     const bill = results[index];
-    const listItemStyle = {
-      ...style,
-      marginBottom: "4px",
-      marginTop: "4px",
-    };
     if (!bill) return null;
     return (
       <Link
@@ -51,19 +52,14 @@ function Home() {
           },
         }}
       >
-        <ListItem
-          style={listItemStyle}
-          key={bill["id"]}
-          component="div"
-          disablePadding
-        >
+        <ListItem style={style} key={bill["id"]} component="div" disablePadding>
           <ListItemButton>
-            <ListItemText primary={`Bill ${index + 1}`} />
             <BillButton
-              key={bill["id"]}
+              key={bill["bill_id"]}
               billTitle={bill["title"]}
-              billID={bill["id"]}
-              billName={bill["title"]}
+              billID={bill["bill_id"]}
+              billDescription={bill["description"]}
+              billNumber={bill["number"]}
             />
           </ListItemButton>
         </ListItem>
@@ -73,6 +69,7 @@ function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const data = await fetch(`/api/billsForState?state=${state}`);
       const dataJson = await data.json();
       if (data.status >= 400) {
@@ -80,6 +77,7 @@ function Home() {
       } else {
         setResults(dataJson);
       }
+      setLoading(false);
     };
     fetchData();
 
@@ -92,8 +90,8 @@ function Home() {
         <div className={styles.main}>
           <Box
             sx={{
-              width: 550,
-              height: 350,
+              width: 600,
+              height: 325,
               backgroundColor: "#FFFEF2",
               boxShadow: 15,
               alignSelf: "center",
@@ -102,52 +100,57 @@ function Home() {
               justifyContent: "center",
               alignItems: "center",
               paddingBottom: "2rem",
-              borderRadius: "12px",
+              borderRadius: "30px",
             }}
           >
             <Blurb />
+          </Box>
+          <div className="mt-[100px]">
+            <div className={`${styles.arrow} ${styles.arrowfirst}`}></div>
+            <div className={`${styles.arrow} ${styles.arrowsecond}`}></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Second Part */}
+      <div className="h-screen flex flex-col justify-center content-center mx-4">
+        <div>
+          <div className={styles.hottestBills}>
+            <span>Hottest Bills in </span>
+            <FormControl className={styles.inputBox}>
+              <InputLabel id="demo-simple-select-label">State</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="State"
+                value={state}
+                onChange={(event) => {
+                  setState(event.target.value as string);
+                  console.log(event.target.value);
+                }}
+              >
+                <MenuItem value="CA">CA</MenuItem>
+                <MenuItem value="FL">FL</MenuItem>
+                <MenuItem value="WV">WV</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          <Box className="flex flex-row justify-center">
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              <FixedSizeList
+                height={400}
+                width={800}
+                itemSize={160}
+                itemCount={results.length}
+              >
+                {renderRow}
+              </FixedSizeList>
+            )}
           </Box>
         </div>
       </div>
     </>
   );
-}
-//div className="bg-cream h-[450px] w-[600px] flex-col flex justify-center"
-
-{
-  /* Left side */
-}
-{
-  /* <div className={styles.left}>
-            <div className={styles.hottestBills}>
-              <span>Hottest Bills in </span>
-              <FormControl className={styles.inputBox}>
-                <InputLabel id="demo-simple-select-label">State</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="State"
-                  value={state}
-                  onChange={(event) => {
-                    setState(event.target.value as string);
-                    console.log(event.target.value);
-                  }}
-                >
-                  <MenuItem value="CA">CA</MenuItem>
-                  <MenuItem value="FL">FL</MenuItem>
-                  <MenuItem value="WV">WV</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <Box className={styles.list}>
-              <FixedSizeList
-                height={400}
-                width={360}
-                itemSize={100}
-                itemCount={results.length}
-              >
-                {renderRow}
-              </FixedSizeList>
-            </Box>
-          </div> */
 }
