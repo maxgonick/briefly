@@ -10,7 +10,6 @@ import {
   InputLabel,
   MenuItem,
   ListItem,
-  ListItemText,
   ListItemButton,
   Box,
 } from "@mui/material";
