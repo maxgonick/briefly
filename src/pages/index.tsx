@@ -15,7 +15,11 @@ import {
   Box,
 } from "@mui/material";
 import Footer from "@/components/Footer";
-import { FixedSizeList, ListChildComponentProps } from "react-window";
+import {
+  FixedSizeList,
+  ListChildComponentProps,
+  VariableSizeList,
+} from "react-window";
 import Blurb from "../components/Blurb";
 import EmailCallTabs from "@/components/EmailCallTabs";
 import BillButton from "@/components/BillButton";
@@ -37,11 +41,6 @@ function Home() {
   const renderRow = (props: ListChildComponentProps) => {
     const { index, style } = props;
     const bill = results[index];
-    const listItemStyle = {
-      ...style,
-      marginBottom: "4px",
-      marginTop: "4px",
-    };
     if (!bill) return null;
     return (
       <Link
@@ -52,22 +51,17 @@ function Home() {
           },
         }}
       >
-        <ListItem
-          style={listItemStyle}
-          key={bill["id"]}
-          component="div"
-          disablePadding
-        >
-        <ListItemButton>
-          <BillButton
-            key={bill["bill_id"]}
-            billTitle={bill["title"]}
-            billID={bill["bill_id"]}
-            billDescription={bill["description"]}
-            billNumber={bill["number"]}
-          />
-        </ListItemButton>
-      </ListItem>
+        <ListItem style={style} key={bill["id"]} component="div" disablePadding>
+          <ListItemButton>
+            <BillButton
+              key={bill["bill_id"]}
+              billTitle={bill["title"]}
+              billID={bill["bill_id"]}
+              billDescription={bill["description"]}
+              billNumber={bill["number"]}
+            />
+          </ListItemButton>
+        </ListItem>
       </Link>
     );
   };
@@ -141,7 +135,7 @@ function Home() {
           <FixedSizeList
             height={400}
             width={360}
-            itemSize={100}
+            itemSize={160}
             itemCount={results.length}
           >
             {renderRow}
