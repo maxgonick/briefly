@@ -6,8 +6,8 @@ export default async function writeEmail(req : NextApiRequest, res: NextApiRespo
     if(req.method == "GET") {
         const billName = req.query.name;
         const billSponsor = req.query.sponsor;
-        const proEmailPrompt = `Hello honorable Representative ${billSponsor}, I wanted to commend your sponsorship of ${billName}, as it has profound impacts on American society.`;
-        const antiEmailPrompt = `Hello honorable Representative ${billSponsor}, I wanted to voice my opposing viewpoint to this legislation, seeing that you are the sponsor of ${billName}, and I felt the imperative to reach out to my elected officials and dissuade policies like this.`;
+        const proEmailPrompt = `Dear Representative ${billSponsor}, I wanted contact you in regards of your legislation ${billName}, as it has had profound impacts in our community.`;
+        const antiEmailPrompt = `Dear Representative ${billSponsor}, I wanted to voice my opposing viewpoint to this legislation, as you were the representative that sponsored ${billName}, and I wanted to reach out to my elected officials on what I believe.`;
         
     await (async () => {
         let pEmail = await cohere.generate({
