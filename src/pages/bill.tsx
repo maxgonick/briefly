@@ -69,7 +69,6 @@ const Bill = (props: Props) => {
           committee: resultJson.bill.committee.name,
           summary: resultJson.bill.description// summaryResultJSON.body.summary,
         });
-        //console.log("fuck all" , summaryResultJSON.body.summary);
       }
     };
     fetchData(data);
@@ -77,7 +76,7 @@ const Bill = (props: Props) => {
 
   return (
     <div>
-      <Header />
+      <Header callback={()=>{}}/>
       <div className="text-center mt-5">
         <Typography
           variant="h6"

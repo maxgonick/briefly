@@ -2,9 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
 import Link from "next/link";
+import { useGlobalStateContext } from "@/context";
 
 const SearchBar = () => {
   const [keywords, setKeywords] = useState("");
+  const {state} =  useGlobalStateContext();
+
 
   const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywords(e.target.value);
@@ -14,6 +17,7 @@ const SearchBar = () => {
     <div>
       <Box
         sx={{
+          marginLeft: 5,
           display: "flex",
           alignItems: "center",
           height: "100%",
@@ -24,7 +28,7 @@ const SearchBar = () => {
           sx={{
             input: {
               height: "10px",
-              backgroundColor: "white",
+              backgroundColor: "#FAF9F6",
               borderRadius: 3,
               width: 300,
             },
@@ -52,7 +56,7 @@ const SearchBar = () => {
           <Link
             href={{
               pathname: "/searchResults",
-              query: { keywords },
+              query: { keywords, state},
             }}
           >
             search

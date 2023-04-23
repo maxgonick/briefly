@@ -26,10 +26,13 @@ export default function SearchResultsWrapper() {
   );
 }
 function SearchResults() {
-  const { state, setState } = useGlobalStateContext();
   const router = useRouter();
   const routerQuery = router.query;
   let keywords = routerQuery[Object.keys(routerQuery)[0]];
+  const stateFromRoute = routerQuery[Object.keys(routerQuery)[1]];
+  const [localState, setLocalState] = useState(stateFromRoute);
+
+
 
   const [results, setResults] = useState<any>([]);
 
@@ -37,7 +40,7 @@ function SearchResults() {
     const fetchData = async () => {
       const query = keywords;
       const searchData = await fetch(
-        `/api/billsForText?state=${state}&query=${query}`
+        `/api/billsForText?state=${localState}&query=${query}`
       );
       const searchDataJson = await searchData.json();
       if (searchData.status >= 400) {
@@ -49,7 +52,7 @@ function SearchResults() {
     };
     fetchData();
     console.log(keywords);
-  }, [keywords, state]);
+  }, [keywords, localState]);
 
   const renderRow = (props: ListChildComponentProps) => {
     const { index, style } = props;
@@ -83,29 +86,11 @@ function SearchResults() {
 
   return (
     <>
-    <Header />
+    <Header callback={setLocalState}/>
       <div className={styles.main}>
         <div className={styles.middle}>
           {/* Left side */}
           <div className={styles.left}>
-            <div className={styles.hottestBills}>
-              <FormControl className={styles.inputBox}>
-                <InputLabel id="demo-simple-select-label">State</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="State"
-                  value={state}
-                  onChange={(event) => {
-                    setState(event.target.value as string);
-                  }}
-                >
-                  <MenuItem value="CA">CA</MenuItem>
-                  <MenuItem value="FL">FL</MenuItem>
-                  <MenuItem value="WV">WV</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
             <Box className={styles.list}>
               <FixedSizeList
                 height={400}

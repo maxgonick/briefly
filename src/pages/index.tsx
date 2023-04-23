@@ -36,7 +36,8 @@ export default function HomeWrapper() {
 
 function Home() {
   const [results, setResults] = useState<any>([]);
-  const { state, setState } = useGlobalStateContext();
+  const { state } = useGlobalStateContext();
+  const [localState, setLocalState] = useState(state);
   const [loading, setLoading] = useState<boolean>(false);
 
   const renderRow = (props: ListChildComponentProps) => {
@@ -70,7 +71,7 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const data = await fetch(`/api/billsForState?state=${state}`);
+      const data = await fetch(`/api/billsForState?state=${localState}`);
       const dataJson = await data.json();
       if (data.status >= 400) {
         console.log(dataJson["message"]);
@@ -80,13 +81,10 @@ function Home() {
       setLoading(false);
     };
     fetchData();
-
-    console.log("THIS IS THE STATE:   ", state);
-  }, [state]);
+  }, [localState]);
   return (
     <>
       <div className="flex flex-col h-screen">
-        {/* <Header /> */}
         <div className={styles.main}>
           <Box
             sx={{
@@ -112,44 +110,22 @@ function Home() {
         </div>
       </div>
 
-      {/* Second Part */}
-      <div className="h-screen flex flex-col justify-center content-center mx-4">
-        <div>
-          <div className={styles.hottestBills}>
-            <span>Hottest Bills in </span>
-            <FormControl className={styles.inputBox}>
-              <InputLabel id="demo-simple-select-label">State</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="State"
-                value={state}
-                onChange={(event) => {
-                  setState(event.target.value as string);
-                  console.log(event.target.value);
-                }}
-              >
-                <MenuItem value="CA">CA</MenuItem>
-                <MenuItem value="FL">FL</MenuItem>
-                <MenuItem value="WV">WV</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-          <Box className="flex flex-row justify-center">
-            {loading ? (
-              <div>Loading...</div>
-            ) : (
-              <FixedSizeList
-                height={400}
-                width={800}
-                itemSize={160}
-                itemCount={results.length}
-              >
-                {renderRow}
-              </FixedSizeList>
-            )}
-          </Box>
-        </div>
+      <div className="h-screen flex flex-col justify-between content-center">
+        <Header callback={setLocalState}/>
+        <Box className="flex flex-row justify-center">
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <FixedSizeList
+              height={400}
+              width={800}
+              itemSize={160}
+              itemCount={results.length}
+            >
+              {renderRow}
+            </FixedSizeList>
+          )}
+        </Box>
       </div>
     </>
   );
