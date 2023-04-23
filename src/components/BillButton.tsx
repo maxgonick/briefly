@@ -19,7 +19,7 @@ export default function BillButton(props:{billDescription: string, billTitle: st
                     <Link
                         overlay
                         underline="none"
-                        href=""
+                        href={`/bill?id=${props.billNumber}`}
                         sx={{ color: 'black' }}
                     >
                         {props.billNumber}: {props.billTitle}

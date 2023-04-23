@@ -14,8 +14,8 @@ import SearchBar from "./SearchBar";
 
 export default function Footer() {
   return (
-    <Box position="">
-      <AppBar position="relative">
+    <Box sx={{ flexGrow: 0 }}>
+      <AppBar position="static" style={{backgroundColor: "#5EB1DE"}}>
         <Toolbar>
           <div
             style={{
@@ -25,21 +25,8 @@ export default function Footer() {
               width: "100%",
             }}
           >
-            <Link href="/">About Us</Link>
+            <Link href="/">Back</Link>
           </div>
-          {/* <Typography variant="h6" align = "center" component="div" sx={{ flexGrow: 1 }}>
-            |
-          </Typography> */}
-
-          {/* <Typography variant="h6" align = "right" component="div" sx={{ flexGrow: 1 }} >
-            Briefly
-          </Typography>
-          <Typography variant="h6" align = "center" component="div" sx={{ flexGrow: 1 }}>
-            Briefly2
-          </Typography>
-          <Typography variant="h6" align = "left" component="div" sx={{ flexGrow: 1 }}>
-            Briefly3
-          </Typography> */}
         </Toolbar>
       </AppBar>
     </Box>

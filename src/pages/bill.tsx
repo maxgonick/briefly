@@ -3,6 +3,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BillFullInfo from "@/components/BillFullInfo";
 import EmailCallTabs from "@/components/EmailCallTabs";
+import { Typography } from "@mui/material";
+import Email from "@/components/Email";
 
 import { useRouter } from "next/router";
 type Props = {};
@@ -29,9 +31,11 @@ function intToStatus(inp: string) {
 const Bill = (props: Props) => {
   const router = useRouter();
   const data = router.query.billId;
+  console.log(data);
   const [billObj, setbillObj] = useState({
     name: "Loading...",
     status: "",
+    number: "",
     date: "",
     sponsor: "",
     committee: "",
@@ -57,6 +61,7 @@ const Bill = (props: Props) => {
             resultJson.bill.progress[resultJson.bill.progress.length - 1].event
           ),
           date: resultJson.bill.status_date,
+          number: resultJson.bill.bill_number,
           sponsor: resultJson.bill.sponsors
             .map((obj) => {
               return obj.name;
@@ -73,6 +78,15 @@ const Bill = (props: Props) => {
   return (
     <div>
       <Header />
+      <div className="text-center mt-5">
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1, fontSize: 36, marginLeft: 2, color: "#362419" }}
+        >
+          {billObj.name}
+        </Typography>
+      </div>
       <div className="flex  w-auto justify-evenly">
         <div className="w-1/2 p-3">
           <BillFullInfo
@@ -86,12 +100,26 @@ const Bill = (props: Props) => {
         </div>
         <div className="w-1/2 p-3 mr-3">
           <EmailCallTabs
-            email="Dear Senator Schumer, I am writing to commend you for your leadership in championing the Infrastructure Investment and Jobs Act. As a constituent who cares deeply about the state of our country's infrastructure, I believe this bill is urgently needed to create jobs, modernize our transportation systems, and invest in critical infrastructure like broadband, clean drinking water, and more. The investments outlined in this bill are sorely needed, and I am grateful that you and your colleagues in the Senate have taken action to address this pressing issue. I urge you to continue your efforts to ensure that this bill becomes law, and I will be closely following its progress in the House of Representatives. Thank you for your dedication to improving our country's infrastructure, and for your commitment to creating jobs and improving the lives of Americans. Sincerely, [Your Name]"
-            number="insertPhoneNo"
+            forEmail={
+              <Email
+                emailSubject={`Support for ${
+                  billObj.number + ": " + billObj.name
+                }`}
+                emailBody="generated text"
+              />
+            }
+            againstEmail={
+              <Email
+                emailSubject={`Opposition to ${
+                  billObj.number + ": " + billObj.name
+                }`}
+                emailBody="generated text"
+              />
+            }
           />
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

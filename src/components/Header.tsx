@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   TextField,
@@ -14,10 +15,10 @@ import SearchBar from "./SearchBar";
 export default function Header() {
   return (
     <Box sx={{ flexGrow: 0 }}>
-      <AppBar position="static">
+      <AppBar position="static" style={{backgroundColor: "#5EB1DE"}}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Briefly
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+            <Link href="/">Briefly.</Link>
           </Typography>
           <SearchBar />
         </Toolbar>

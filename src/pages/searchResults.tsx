@@ -83,8 +83,8 @@ function SearchResults() {
 
   return (
     <>
+    <Header />
       <div className={styles.main}>
-        <Header />
         <div className={styles.middle}>
           {/* Left side */}
           <div className={styles.left}>
@@ -98,7 +98,6 @@ function SearchResults() {
                   value={state}
                   onChange={(event) => {
                     setState(event.target.value as string);
-                    console.log(event.target.value);
                   }}
                 >
                   <MenuItem value="CA">CA</MenuItem>
@@ -121,7 +120,7 @@ function SearchResults() {
           {/* <Blurb /> */}
           {/* Right side */}
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );

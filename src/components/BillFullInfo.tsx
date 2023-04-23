@@ -1,6 +1,5 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 
 export default function BillFullInfo(props: {
   billName: string;
@@ -12,19 +11,19 @@ export default function BillFullInfo(props: {
 }) {
   return (
     <div className="flex flex-col">
-      <Typography
+      {/* <Typography
         variant="h6"
         component="div"
         sx={{ flexGrow: 1, fontSize: 36, marginLeft: 2 }}
       >
         {props.billName}
-      </Typography>
+      </Typography> */}
       <Box
         sx={{
           margin: 1,
           width: 1,
-          backgroundColor: "primary.dark",
-          borderRadius: 10,
+          backgroundColor: "#FAF9F6",
+          borderRadius: 2,
           boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.3)",
           flexGrow: 1,
         }}
@@ -39,6 +38,7 @@ export default function BillFullInfo(props: {
               textIndent: 1,
               flex: 1,
               padding: 2,
+              color: "#362419"
             }}
           >
             <p className="break-words">
@@ -51,63 +51,65 @@ export default function BillFullInfo(props: {
       <Box
         sx={{
           margin: 1,
+          marginTop: 5,
           width: 1,
-          backgroundColor: "primary.dark",
-          borderRadius: 10,
+          backgroundColor: "#FAF9F6",
+          borderRadius: 2,
           boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.3)",
           flexGrow: 1,
         }}
       >
-        <div className="flex flex-row">
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              fontSize: 24,
-              textIndent: 1,
-              width: 0.5,
-              flex: 1,
-              padding: 2,
-            }}
-          >
-            <p className="break-words">
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{
+            flexGrow: 1,
+            fontSize: 24,
+            textIndent: 1,
+            flex: 1,
+            padding: 2,
+            color: "#362419"
+          }}
+        >
+          <div className="flex flex-row">
+            <p className="break-words mr-10">
               Status: {props.billStatus}
               <br />
             </p>
             <p>
-              <br />
             </p>
-            <p className="break-words">
+            <p className="break-words ml-10">
               Date: {props.billDate}
               <br />
             </p>
-          </Typography>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              fontSize: 24,
-              textIndent: 1,
-              width: 0.5,
-              flex: 1,
-              padding: 2,
-            }}
-          >
-            <p className="break-words">
-              Sponsor: {props.billSponsor}
-              <br />
-            </p>
-            <p>
-              <br />
-            </p>
-            <p className="break-words">
-              Committee: {props.billCommittee}
-              <br />
-            </p>
-          </Typography>
-        </div>
+          </div>
+        </Typography>
+
+
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{
+            flexGrow: 1,
+            fontSize: 24,
+            textIndent: 1,
+            flex: 1,
+            padding: 2,
+            color: "#362419"
+          }}
+        >
+          <p className="break-words">
+            Sponsors: {props.billSponsor}
+            <br />
+          </p>
+          <p>
+            <br />
+          </p>
+          <p className="break-words">
+            Committee: {props.billCommittee}
+            <br />
+          </p>
+        </Typography>
       </Box>
     </div>
   );
