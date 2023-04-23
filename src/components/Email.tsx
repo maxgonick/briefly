@@ -1,5 +1,6 @@
 import { Typography, Box } from "@mui/material";
-
+import cohere from '../../public/cohere.svg';
+import Image from 'next/image';
 export default function Email(props: {
   emailSubject: string;
   emailBody: string;
@@ -90,6 +91,7 @@ export default function Email(props: {
             {props.emailBody}
             <br />
         </Typography>
+        <Image src={cohere} alt="" style={{marginLeft: 'auto'}}/>
       </Box>
     </div>
   );

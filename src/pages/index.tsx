@@ -1,4 +1,5 @@
-import Image from "next/image";
+import cohere from '../../public/cohere.svg';
+import Image from 'next/image';
 import { Inter } from "next/font/google";
 import { useState, useEffect, useContext } from "react";
 import Header from "@/components/Header";
@@ -102,6 +103,23 @@ function Home() {
             }}
           >
             <Blurb />
+          </Box>
+          <Box sx={{
+              width: 250,
+              padding: "5px",
+              backgroundColor: "#FFFEF2",
+              boxShadow: 15,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: "8px",
+              marginRight: "20px",
+              marginLeft: 'auto',
+              position: 'relative'
+            }}
+            >
+            <p>powered by: &nbsp;<span/> </p>
+          <Image src={cohere} alt="" style={{marginLeft: 'auto'}}/>
           </Box>
           <div className="mt-[100px]">
             <div className={`${styles.arrow} ${styles.arrowfirst}`}></div>
