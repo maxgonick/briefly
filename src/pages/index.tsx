@@ -37,6 +37,7 @@ export default function HomeWrapper() {
 function Home() {
   const [results, setResults] = useState<any>([]);
   const { state, setState } = useGlobalStateContext();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const renderRow = (props: ListChildComponentProps) => {
     const { index, style } = props;
@@ -68,6 +69,7 @@ function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const data = await fetch(`/api/billsForState?state=${state}`);
       const dataJson = await data.json();
       if (data.status >= 400) {
@@ -75,6 +77,7 @@ function Home() {
       } else {
         setResults(dataJson);
       }
+      setLoading(false);
     };
     fetchData();
 
@@ -110,77 +113,44 @@ function Home() {
       </div>
 
       {/* Second Part */}
-      <div className="h-screen flex flex-col justify-center content-center">
-        <div className={styles.hottestBills}>
-          <span>Hottest Bills in </span>
-          <FormControl className={styles.inputBox}>
-            <InputLabel id="demo-simple-select-label">State</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="State"
-              value={state}
-              onChange={(event) => {
-                setState(event.target.value as string);
-                console.log(event.target.value);
-              }}
-            >
-              <MenuItem value="CA">CA</MenuItem>
-              <MenuItem value="FL">FL</MenuItem>
-              <MenuItem value="WV">WV</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        <Box className={styles.list}>
-          <FixedSizeList
-            height={400}
-            width={360}
-            itemSize={160}
-            itemCount={results.length}
-          >
-            {renderRow}
-          </FixedSizeList>
-        </Box>
-      </div>
-    </>
-  );
-}
-//div className="bg-cream h-[450px] w-[600px] flex-col flex justify-center"
-
-{
-  /* Left side */
-}
-{
-  /* <div className={styles.left}>
-            <div className={styles.hottestBills}>
-              <span>Hottest Bills in </span>
-              <FormControl className={styles.inputBox}>
-                <InputLabel id="demo-simple-select-label">State</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="State"
-                  value={state}
-                  onChange={(event) => {
-                    setState(event.target.value as string);
-                    console.log(event.target.value);
-                  }}
-                >
-                  <MenuItem value="CA">CA</MenuItem>
-                  <MenuItem value="FL">FL</MenuItem>
-                  <MenuItem value="WV">WV</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <Box className={styles.list}>
+      <div className="h-screen flex flex-col justify-center content-center mx-4">
+        <div>
+          <div className={styles.hottestBills}>
+            <span>Hottest Bills in </span>
+            <FormControl className={styles.inputBox}>
+              <InputLabel id="demo-simple-select-label">State</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="State"
+                value={state}
+                onChange={(event) => {
+                  setState(event.target.value as string);
+                  console.log(event.target.value);
+                }}
+              >
+                <MenuItem value="CA">CA</MenuItem>
+                <MenuItem value="FL">FL</MenuItem>
+                <MenuItem value="WV">WV</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          <Box className="flex flex-row justify-center">
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
               <FixedSizeList
                 height={400}
-                width={360}
-                itemSize={100}
+                width={800}
+                itemSize={160}
                 itemCount={results.length}
               >
                 {renderRow}
               </FixedSizeList>
-            </Box>
-          </div> */
+            )}
+          </Box>
+        </div>
+      </div>
+    </>
+  );
 }

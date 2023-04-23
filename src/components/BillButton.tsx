@@ -13,7 +13,7 @@ export default function BillButton(props: {
       orientation="horizontal"
       sx={{
         color: "red",
-        width: 400,
+        width: 800,
         height: 150,
         gap: 2,
         "&:hover": {
@@ -23,7 +23,7 @@ export default function BillButton(props: {
       }}
     >
       <Box flex-direction="column">
-        <Typography fontSize="medium">
+        <Typography fontSize="large">
           <Link
             overlay
             underline="none"
@@ -41,12 +41,12 @@ export default function BillButton(props: {
           </Link>
         </Typography>
         <Typography
-          fontSize={12}
+          fontSize={14}
           sx={{
             display: "-webkit-box",
             overflow: "hidden",
             textOverflow: "ellipsis",
-            WebkitLineClamp: 3,
+            WebkitLineClamp: 4,
             WebkitBoxOrient: "vertical",
           }}
         >

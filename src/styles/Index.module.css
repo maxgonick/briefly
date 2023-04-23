@@ -45,12 +45,6 @@
   gap: 0.5rem;
 }
 
-.list {
-  width: 100%;
-  height: 400;
-  max-width: 400;
-}
-
 .arrow {
   opacity: 0;
   position: absolute;
