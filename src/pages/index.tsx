@@ -87,9 +87,9 @@ function Home() {
   }, [state]);
   return (
     <>
-      <div className="h-screen bg-gradient-to-r from-indigo-500">
-        <Header />
-        <div className="flex flex-col justify-center content-center text-center h-screen ">
+      <div className="flex flex-col h-screen">
+        {/* <Header /> */}
+        <div className={styles.main}>
           <Box
             sx={{
               width: 550,

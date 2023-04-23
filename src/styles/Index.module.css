@@ -1,6 +1,25 @@
 .main {
-  background-color: white;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  background-size: 100%;
+  background-repeat: repeat;
+  background: linear-gradient(to left, #613dc1, #58baff);
+  background-size: 400% 100%;
+  animation: color_change 10s ease-in-out infinite;
+}
+
+@keyframes color_change {
+  0%,
+  100% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100%;
+  }
 }
 
 .middle {

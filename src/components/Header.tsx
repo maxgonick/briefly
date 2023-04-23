@@ -13,8 +13,8 @@ import SearchBar from "./SearchBar";
 
 export default function Header() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="absolute">
+    <Box sx={{ flexGrow: 0 }}>
+      <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Briefly

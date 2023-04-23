@@ -45,12 +45,12 @@ const Bill = (props: Props) => {
         const result = await fetch(`/api/getBill?id=${billId}`);
         const resultJson = await result.json();
         console.log(resultJson);
-        const summaryResult = await fetch(
-          `/api/summarizeBill?input=${resultJson.bill.description}`
-        );
+        // const summaryResult = await fetch(
+        //   `/api/summarizeBill?input=${resultJson.bill.description}`
+        // );
 
-        const summaryResultJSON = await summaryResult.json();
-        console.log(summaryResultJSON);
+        // const summaryResultJSON = await summaryResult.json();
+        // console.log(summaryResultJSON);
         setbillObj({
           name: resultJson.bill.title,
           status: intToStatus(
@@ -63,7 +63,7 @@ const Bill = (props: Props) => {
             })
             .join(", "),
           committee: resultJson.bill.committee.name,
-          summary: summaryResultJSON.summary,
+          summary: resultJson.bill.description,
         });
       }
     };
@@ -73,7 +73,7 @@ const Bill = (props: Props) => {
   return (
     <div>
       <Header />
-      <div className="flex flex-row w-auto justify-evenly">
+      <div className="flex  w-auto justify-evenly">
         <div className="w-1/2 p-3">
           <BillFullInfo
             billName={billObj.name}
