@@ -11,7 +11,6 @@ cohere.init('zitvjK5dJu7kdy2u8FtU3jvzYG5gw9okxIIMPyYh')
 export default async function summarizeBill(req : NextApiRequest, res: NextApiResponse) {
     if(req.method == "GET") {
         const docId = req.query.id;
-        console.log(docId);
         const billText = await fetch(`https://api.legiscan.com/?key=68dd8762bdfd60b2398db511ef856f39&op=getBillText&id=${docId}`);
         const result = await billText.json();
         const rawString = base64.base64ToStr(result.text.doc);
@@ -38,7 +37,7 @@ export default async function summarizeBill(req : NextApiRequest, res: NextApiRe
         const response = await cohere.summarize({
             text: text
         })
-        console.log(response);
+        console.log("summarizeBill finished");
         res.status(200).send(response);
     })();
     }

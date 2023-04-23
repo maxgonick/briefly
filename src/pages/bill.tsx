@@ -36,7 +36,13 @@ const Bill = (props: Props) => {
     sponsor: "",
     committee: "",
     summary: "",
+    proEmail: "Generating...",
+    antiEmail: "Generating...",
   });
+  // const [emailObj, setEmailObj] = useState({
+  //   email: "",
+  //   number: "",
+  // });
   useEffect(() => {
     const fetchData = async (billId: string) => {
       console.log("I am run");
@@ -44,12 +50,14 @@ const Bill = (props: Props) => {
         const result = await fetch(`/api/getBill?id=${billId}`);
         const resultJson = await result.json();
         const docId = resultJson.bill.texts[resultJson.bill.texts.length-1].doc_id;
-        console.log(docId);
+        const emails = await fetch(`/api/writeEmail?name=${resultJson.bill.title}&sponsor=${resultJson.bill.sponsors[0].name}`);
+        const emailsJson = await emails.json();
+        console.log(emailsJson);
+        console.log(Object.keys(emailsJson))
         const summaryResult = await fetch(
           `/api/summarizeBill?id=${docId}`
         );
         const summaryResultJSON = await summaryResult.json();
-        console.log(summaryResultJSON);
         setbillObj({
           name: resultJson.bill.title,
           status: intToStatus(
@@ -63,12 +71,25 @@ const Bill = (props: Props) => {
             .join(", "),
           committee: resultJson.bill.committee.name,
           summary: summaryResultJSON.body.summary,
+          proEmail: emailsJson.proEmail,
+          antiEmail: emailsJson.antiEmail,
         });
-        //console.log("fuck all" , summaryResultJSON.body.summary);
+        
+
+
+        
+        // const emailsJSON = await emails.json();
+        // setEmailObj({
+        //   email: emailsJSON.email,
+        //   number: emailsJSON.number,
+        // });
       }
     };
     fetchData(data);
   }, [data]);
+
+
+
 
   return (
     <div>
@@ -86,8 +107,8 @@ const Bill = (props: Props) => {
         </div>
         <div className="w-1/2 p-3 mr-3">
           <EmailCallTabs
-            email="Dear Senator Schumer, I am writing to commend you for your leadership in championing the Infrastructure Investment and Jobs Act. As a constituent who cares deeply about the state of our country's infrastructure, I believe this bill is urgently needed to create jobs, modernize our transportation systems, and invest in critical infrastructure like broadband, clean drinking water, and more. The investments outlined in this bill are sorely needed, and I am grateful that you and your colleagues in the Senate have taken action to address this pressing issue. I urge you to continue your efforts to ensure that this bill becomes law, and I will be closely following its progress in the House of Representatives. Thank you for your dedication to improving our country's infrastructure, and for your commitment to creating jobs and improving the lives of Americans. Sincerely, [Your Name]"
-            number="insertPhoneNo"
+            email= {billObj.proEmail}
+            number= {billObj.antiEmail}
           />
         </div>
       </div>
